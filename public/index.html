@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nodejs app</title>
+    <style>
+        .form{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: rgb(241, 241, 241);
+            border: 1px solid black;
+            height: 18rem;
+            width: 15rem;
+        }
+        body{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        #getDataBtn{
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+  
+<div class="form"> 
+    <h1>Sample Form</h1>
+    <form>
+        <div class="input">
+            <p>Name:</p>
+        <input type="text" id="name" name="name" required>
+        </div>
+        <div class="input">
+            <p>Age:</p>
+        <input type="number" id="age" name="age" required>
+        </div>
+        
+        <br>
+        <button id="insert">Insert</button>
+    </form>
+</div>
+    
+
+    <button id="getDataBtn">Get Data</button>
+    <div id="dataDisplay"></div>
+
+    <script>
+
+document.getElementById('insert').addEventListener('click', async (event) => {
+    event.preventDefault()
+            const name = document.getElementById('name').value;
+            const age = document.getElementById('age').value;
+
+            try {
+                const response = await fetch('/insert', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ name, age })
+                });
+                document.getElementById('getDataBtn').click();
+                document.getElementById('name').value = '';
+                document.getElementById('age').value = '';
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        });
+
+        document.getElementById('getDataBtn').addEventListener('click', async () => {
+            try {
+                const response = await fetch('/fetch');
+                const data = await response.json();
+                displayData(data);
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        });
+
+        function displayData(data) {
+            const dataDisplay = document.getElementById('dataDisplay');
+            let table = '<table border="1"><tr><th>Name</th><th>Age</th></tr>';
+
+            data.forEach(item => {
+                table += `<tr><td>${item.name}</td><td>${item.age}</td></tr>`;
+            });
+
+            table += '</table>';
+            dataDisplay.innerHTML = table;
+        }
+    </script>
+</body>
+</html>
