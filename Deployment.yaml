@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: nodejs-app
-        image: 
+        image: replaced_with_updated_image_from_jenkins
         imagePullPolicy: Always
         ports:
           - name: nodejs-app-port
