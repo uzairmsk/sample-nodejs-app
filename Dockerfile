@@ -6,5 +6,5 @@ COPY package*.json ./
 RUN npm install
 COPY . .
 RUN ls
-EXPOSE 3000
+EXPOSE 3001
 ENTRYPOINT ["node", "app.js"]
