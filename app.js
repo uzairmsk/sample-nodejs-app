@@ -5,14 +5,14 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 
 const app = express();
-const port = 3000;
+const port = 3001;
 
 app.use(cors());
 app.use(bodyParser.json());
 
 // Serve static files (like index.html) from the 'public' directory
 app.use(express.static('public'));
-const mongoUri = process.env.MONGODB_URI || 'mongodb://34.171.52.200:27017/testdb';
+const mongoUri = "mongodb://"+process.env.MONGODB_URI+":27017/testdb" || 'mongodb://34.171.52.200:27017/testdb';
 mongoose.connect(mongoUri, {
     useNewUrlParser: true,
     useUnifiedTopology: true
